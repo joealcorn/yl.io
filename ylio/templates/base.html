@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+    <title></title>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $('form').submit(function(event) {
+                event.preventDefault();
+
+                var url = $('input').val();
+                if (url.substring(0, 4) != "http") {
+                    url = 'http://' + url
+                }
+
+                $.ajax({
+                    url: '/shorten',
+                    type: 'POST',
+                    data: {
+                        url: url
+                    },
+                    success: function(data) {
+                        $('body').append(data.url)
+                    },
+                    error: function() {
+                        $('body').append('nope')
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+    <form>
+        <input type="text" autofocus>
+    </form>
+</body>
+</html>
