@@ -64,6 +64,22 @@ class Links(object):
             return
 
     @classmethod
+    def get(self, id36):
+        """
+        Grabs a link from the db by id36
+        """
+        cur = self.cursor()
+        cur.execute(
+            """
+            SELECT * FROM links
+            WHERE id36 = %s
+            """, id36
+        )
+        result = cur.fetchone()
+        cur.close()
+        return result
+
+    @classmethod
     def to_base36(self, number):
         """
         Converts an integer to a base36 string
