@@ -73,7 +73,7 @@ class Links(object):
             """
             SELECT * FROM links
             WHERE id36 = %s
-            """, id36
+            """, (id36,)
         )
         result = cur.fetchone()
         cur.close()
