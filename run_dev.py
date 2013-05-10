@@ -1,2 +1,2 @@
 from ylio import app
-app.run(debug=True)
+app.run(debug=app.config.get('DEBUG', True))

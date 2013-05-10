@@ -10,4 +10,6 @@ PG_PASS = 'hunter2'
 # ============================= #
 #               App             #
 # ============================= #
-DOMAIN_BLACKLIST = ['yl.io']
+DEBUG = False
+SERVER_NAME = 'yl.io'
+DOMAIN_BLACKLIST = [SERVER_NAME]
