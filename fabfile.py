@@ -27,7 +27,7 @@ def create_db(drop=False):
     run_pg_command(command, db=None)
 
     print 'Applying schema.sql'
-    command = 'psql -U {user} -h {host} -p {port} -d {db} < schema.sql'
+    command = 'psql -U {0} -h {1} -p {2} -d {3} < schema.sql'
     local(command.format(PG_USER, PG_HOST, PG_PORT, DB_NAME))
 
     print 'Finished'
