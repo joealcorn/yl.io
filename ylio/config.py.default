@@ -1,0 +1,13 @@
+# ============================= #
+#            Postgres           #
+# ============================= #
+DB_NAME = 'ylio'
+PG_HOST = 'localhost'
+PG_PORT = 5432
+PG_USER = 'postgres'
+PG_PASS = 'hunter2'
+
+# ============================= #
+#               App             #
+# ============================= #
+DOMAIN_BLACKLIST = ['yl.io']
