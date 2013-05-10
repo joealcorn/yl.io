@@ -1,8 +1,10 @@
 import re
 
 from flask import (
+    abort,
     jsonify,
     make_response,
+    redirect,
     render_template,
     request,
     url_for,
@@ -41,11 +43,14 @@ def shorten():
     if id36 is None:
         return jsonify(error='server error'), 500
 
-
     short_url = url_for('shortened', id=id36, _external=True)
     return jsonify(url=short_url)
 
 
 @app.route('/<id>')
 def shortened(id):
-    return 'not implemented yet'
+    link = Links.get(id)
+    if link is None:
+        abort(404)
+
+    return redirect(link['target'])
