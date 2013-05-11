@@ -15,20 +15,24 @@ from ylio.config import (
 class Links(object):
 
     alphabet = digits + ascii_letters
-    conn = psycopg2.connect(
-        database=DB_NAME,
-        user=PG_USER,
-        password=PG_PASS,
-        host=PG_HOST,
-        port=PG_PORT
-    )
+
+    @classmethod
+    def connect(self):
+        self.conn = psycopg2.connect(
+            database=DB_NAME,
+            user=PG_USER,
+            password=PG_PASS,
+            host=PG_HOST,
+            port=PG_PORT
+        )
+        return self.conn
 
     @classmethod
     def cursor(self):
         """
         Returns a psycopg2 DictCursor
         """
-        return self.conn.cursor(cursor_factory=DictCursor)
+        return self.connect().cursor(cursor_factory=DictCursor)
 
     @classmethod
     def new(self, link, ip_address):
