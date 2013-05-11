@@ -29,6 +29,7 @@ $(document).ready(function() {
                 url: url
             },
             success: function(data) {
+                $('.info').html('');
                 $('input').val(data.url);
                 $('input').select();
             },
