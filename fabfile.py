@@ -1,6 +1,7 @@
 from fabric.api import task, local, run, sudo, env, cd
 
 from ylio.config import PG_HOST, PG_PORT, DB_NAME, PG_USER
+from ylio.models import Links
 
 env.hosts = ['yl.io']
 
@@ -51,3 +52,11 @@ def deploy():
     with cd('~/projects/yl.io/'):
         run('git pull')
         run('pkill -f --signal HUP "gunicorn: master \[ylio\]"')
+
+
+@task
+def disable(id36):
+    """
+    Disables link with matching id36
+    """
+    Links.disable(id36)

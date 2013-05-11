@@ -84,6 +84,22 @@ class Links(object):
         return result
 
     @classmethod
+    def disable(self, id36):
+        """
+        Disables the link with matching id36
+        """
+        cur = self.cursor()
+        cur.execute(
+            """
+            UPDATE links
+            SET active = FALSE
+            WHERE id36 = %s
+            """, (id36,)
+        )
+        self.conn.commit()
+        cur.close()
+
+    @classmethod
     def to_base36(self, number):
         """
         Converts an integer to a base36 string
