@@ -50,9 +50,4 @@ def deploy():
     """
     with cd('~/projects/yl.io/'):
         run('git pull')
-        output = run('ps ax | grep "master \[ylio\]"')
-        pid = output[:5].strip()
-
-        # kill -HUP reloads the gunicorn workers gracefully
-        sudo('kill -HUP {0}'.format(pid))
-
+        run('pkill -f --signal HUP "gunicorn: master \[ylio\]"')
