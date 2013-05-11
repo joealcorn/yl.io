@@ -1,6 +1,8 @@
-from fabric.api import task, local
+from fabric.api import task, local, run, sudo, env, cd
 
 from ylio.config import PG_HOST, PG_PORT, DB_NAME, PG_USER
+
+env.hosts = ['yl.io']
 
 
 def run_pg_command(command, user=PG_USER, db=DB_NAME, host=PG_HOST, port=PG_PORT):
@@ -39,3 +41,18 @@ def recreate_db():
     The same as create_db, but drops the exiting one first
     """
     create_db(drop=True)
+
+
+@task
+def deploy():
+    """
+    ssh, cd, git pull, kill -HUP
+    """
+    with cd('~/projects/yl.io/'):
+        run('git pull')
+        output = run('ps ax | grep "master \[ylio\]"')
+        pid = output[:5].strip()
+
+        # kill -HUP reloads the gunicorn workers gracefully
+        sudo('kill -HUP {0}'.format(pid))
+
