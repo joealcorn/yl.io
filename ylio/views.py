@@ -38,6 +38,8 @@ def shorten():
         return jsonify(error='missing required param'), 400
     elif not re.match(url_re, url):
         return jsonify(error='invalid url'), 400
+    elif canonical_url(url) in app.config['DOMAIN_BLACKLIST']:
+        return jsonify(error='blacklisted domain'), 403
 
     id36 = Links.new(url, request.remote_addr)
     if id36 is None:
@@ -53,4 +55,19 @@ def shortened(id):
     if link is None:
         abort(404)
 
-    return redirect(link['target'])
+    return redirect(link['target']), 301
+
+
+def canonical_url(url):
+    url = url.lower()
+
+    if url.startswith('http://'):
+        url = url[7:]
+    if url.startswith('https://'):
+        url = url[8:]
+    if url.startswith('www.'):
+        url = url[4:]
+    if url.endswith('/'):
+        url = url[:-1]
+    url = url.split('/', 1)[0]
+    return url
