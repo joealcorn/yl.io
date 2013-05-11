@@ -1,4 +1,5 @@
 html, body, .container {
+    background-color: #f5ebf5;
     height: 100%;
 }
 
@@ -10,12 +11,6 @@ body {
 }
 
 .centreish {
-    text-align: center;
-    position: relative;
-    top: 40%;
-}
-
-form {
     text-align: center;
     position: relative;
     top: 40%;
