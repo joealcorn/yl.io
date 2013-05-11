@@ -1,42 +1,24 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>yl.io URL shortener</title>
+    <meta name="description" content="Another useless free URL shortener">
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            $('form').submit(function(event) {
-                event.preventDefault();
-
-                var url = $('input').val();
-                if (url.substring(0, 4) != "http") {
-                    url = 'http://' + url
-                }
-
-                $.ajax({
-                    url: '/shorten',
-                    type: 'POST',
-                    data: {
-                        url: url
-                    },
-                    success: function(data) {
-                        $('body').append(data.url)
-                    },
-                    error: function() {
-                        $('body').append('nope')
-                    }
-                });
-            });
-
-        });
-    </script>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    {% assets "css" %}<link type="text/css" rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+    {% assets "js" %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
 
 </head>
 <body>
-    <form>
-        <input type="text" autofocus>
-    </form>
+
+    <div class="container">
+        <form>
+            <input name="url" type="text" placeholder='http://example.com' autofocus>
+            <div class="info"></div>
+        </form>
+        <div id="colour"></div>
+    </div>
+
 </body>
 </html>
