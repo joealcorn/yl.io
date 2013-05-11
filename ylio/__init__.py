@@ -24,6 +24,7 @@ assets = Environment(app)
 js = Bundle(
     'js/colorpicker.js',
     'js/modernizr.js',
+    'js/lightordark.js',
     'js/ylio.js',
     filters='jsmin',
     output='scripts.js'

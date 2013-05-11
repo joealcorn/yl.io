@@ -9,6 +9,12 @@ body {
     color: #434343;
 }
 
+.centreish {
+    text-align: center;
+    position: relative;
+    top: 40%;
+}
+
 form {
     text-align: center;
     position: relative;
@@ -35,4 +41,16 @@ input[name=url]:focus {
     left: 10px;
     height: 50px;
     width: 50px;
+}
+
+.disabled {
+    font-size: 2em;
+}
+
+.dark .info {
+    color: #e5e5e5;
+}
+
+.light .info {
+    color: #434343;
 }

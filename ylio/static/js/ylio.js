@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+    $('html').lightOrDark();
     var stuff = {
         color: '#f5ebf5',
     }
@@ -58,6 +59,7 @@ $(document).ready(function() {
             $('html').css('background-color', colour);
             $('#colour').css('background-color', colour);
             stuff.colour = colour;
+            $('html').lightOrDark();
         },
     });
 

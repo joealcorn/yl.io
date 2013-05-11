@@ -28,7 +28,7 @@ url_re = re.compile(
 
 @app.route('/')
 def index():
-    return render_template('base.html')
+    return render_template('index.html')
 
 
 @app.route('/shorten', methods=['POST'])
