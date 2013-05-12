@@ -1,4 +1,4 @@
-from fabric.api import task, local, run, sudo, env, cd
+from fabric.api import task, local, run, sudo, env, cd, prefix
 
 from ylio.config import PG_HOST, PG_PORT, DB_NAME, PG_USER
 from ylio.models import Links
@@ -51,6 +51,8 @@ def deploy():
     """
     with cd('~/projects/yl.io/'):
         run('git pull')
+        with prefix('source ~/venvs/yl.io/bin/activate'):
+            run('pip install -r requirements.txt')
         run('pkill -f --signal HUP "gunicorn: master \[ylio\]"')
 
 
