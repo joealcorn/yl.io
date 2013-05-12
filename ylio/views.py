@@ -73,3 +73,8 @@ def canonical_url(url):
         url = url[:-1]
     url = url.split('/', 1)[0]
     return url
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html')
