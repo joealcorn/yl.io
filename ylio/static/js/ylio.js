@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     var stuff = {
-        color: '#f5ebf5',
+        color: '#1a140b',
     }
 
     if (Modernizr.localstorage) {
