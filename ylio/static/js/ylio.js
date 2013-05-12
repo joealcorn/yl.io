@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-    $('html').lightOrDark();
     var stuff = {
         color: '#f5ebf5',
     }
@@ -15,6 +14,7 @@ $(document).ready(function() {
         }
     }
 
+    $('html').lightOrDark();
     $('form').submit(function(event) {
         event.preventDefault();
 
