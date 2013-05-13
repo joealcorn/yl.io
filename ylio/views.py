@@ -55,7 +55,7 @@ def shortened(id):
     if link is None:
         abort(404)
     elif not link['active']:
-        return render_template('disabled.html')
+        return render_template('disabled.html'), 410
 
     return redirect(link['target']), 301
 
