@@ -36,6 +36,8 @@ def shorten():
     url = request.form.get('url')
     if url is None:
         return jsonify(error='missing required param'), 400
+    elif len(url) >= 2000:
+        return jsonify(error='url too long'), 400
     elif not re.match(url_re, url):
         return jsonify(error='invalid url'), 400
     elif canonical_url(url) in app.config['DOMAIN_BLACKLIST']:
