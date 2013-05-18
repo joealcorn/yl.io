@@ -35,9 +35,16 @@ $(document).ready(function() {
                 $('input').select();
             },
             error: function(xhr) {
-                var data = $.parseJSON(xhr.responseText);
-                $('.info').html('Error: ' + data.error);
-                $('input').shake(2, 20, 350);
+                try {
+                    var data = $.parseJSON(xhr.responseText);
+                    $('.info').html('Error: ' + data.error);
+                } catch(e) {
+                    // The only time valid json won't be returned
+                    // is if the server is down or a 500 is returned
+                    $('.info').html("Error: Couldn't contact server");
+                } finally {
+                    $('input').shake(2, 20, 350);
+                }
             }
         });
     });
