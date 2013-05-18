@@ -10,6 +10,7 @@ from ylio.config import (
     PG_USER,
     PG_PASS
 )
+from ylio import signals
 
 
 class Links(object):
@@ -60,6 +61,7 @@ class Links(object):
             )
             self.conn.commit()
             cur.close()
+            signals.link_shortened.send(self)
             return id36
         except Exception as e:
             print e

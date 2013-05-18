@@ -1,5 +1,4 @@
-from flask import Flask
-from flask.ext.assets import Environment, Bundle
+from flask import Flask, current_app, g
 
 app = Flask(__name__, static_folder=None)
 app.config.from_pyfile('config.py')
@@ -20,6 +19,13 @@ app.add_url_rule(
     view_func=app.send_static_file
 )
 
+
+@app.before_request
+def set_signal_sender():
+    g.sender = current_app._get_current_object
+
+
+from flask.ext.assets import Environment, Bundle
 assets = Environment(app)
 js = Bundle(
     'js/colorpicker.js',

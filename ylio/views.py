@@ -2,15 +2,15 @@ import re
 
 from flask import (
     abort,
+    g,
     jsonify,
-    make_response,
     redirect,
     render_template,
     request,
     url_for,
 )
 
-from ylio import app
+from ylio import app, signals
 from ylio.models import Links
 
 # This re is taken from django and slightly modified
@@ -34,14 +34,25 @@ def index():
 @app.route('/shorten', methods=['POST'])
 def shorten():
     url = request.form.get('url')
+
     if url is None:
-        return jsonify(error='missing required param'), 400
+        error = 'missing required param'
+        signals.link_refused.send(g.sender(), error=error)
+        return jsonify(error=error), 400
     elif len(url) >= 2000:
-        return jsonify(error='url too long'), 400
+        error = 'url too long'
+        signals.link_refused.send(g.sender(), error=error)
+        return jsonify(error=error), 400
+
     elif not re.match(url_re, url):
-        return jsonify(error='invalid url'), 400
+        error = 'invalid url'
+        signals.link_refused.send(g.sender(), error=error)
+        return jsonify(error=error), 400
+
     elif canonical_url(url) in app.config['DOMAIN_BLACKLIST']:
-        return jsonify(error='blacklisted domain'), 403
+        error = 'blacklisted domain'
+        signals.link_refused.send(g.sender(), error=error)
+        return jsonify(error=error), 403
 
     id36 = Links.new(url, request.remote_addr)
     if id36 is None:
@@ -54,11 +65,14 @@ def shorten():
 @app.route('/<id>')
 def shortened(id):
     link = Links.get(id)
+
     if link is None:
         abort(404)
     elif not link['active']:
+        signals.disabled_link_visited.send(g.sender(), request=request)
         return render_template('disabled.html'), 410
 
+    signals.link_visited.send(g.sender(), request=request)
     return redirect(link['target']), 301
 
 
@@ -79,9 +93,11 @@ def canonical_url(url):
 
 @app.errorhandler(404)
 def not_found(error):
+    signals.not_found.send(g.sender(), request=request)
     return render_template('404.html'), 404
 
 
 @app.errorhandler(500)
 def server_error(error):
+    signals.server_error.send(g.sender(), request=request)
     return render_template('500.html'), 500
