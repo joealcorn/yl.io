@@ -9,7 +9,7 @@ app.config.from_pyfile('config.py')
 app.static_folder = 'static'
 static_path = '/<path:filename>'
 static_subdomain = 'static'
-if app.config.get('DEBUG', False):
+if app.config.get('SERVER_NAME') is None:
     static_path = '/static/<path:filename>'
     static_subdomain = None
 
