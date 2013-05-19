@@ -4,5 +4,6 @@ CREATE TABLE links (
     target text NOT NULL,
     created timestamp NOT NULL DEFAULT now(),
     created_by inet NOT NULL,
-    active boolean NOT NULL DEFAULT TRUE
+    active boolean NOT NULL DEFAULT TRUE,
+    clicks integer DEFAULT 0
 );

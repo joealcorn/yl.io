@@ -3,6 +3,7 @@ from string import ascii_letters, digits
 import psycopg2
 from psycopg2.extras import DictCursor
 
+import signals
 from ylio.config import (
     PG_HOST,
     PG_PORT,
@@ -10,7 +11,6 @@ from ylio.config import (
     PG_USER,
     PG_PASS
 )
-from ylio import signals
 
 
 class Links(object):
@@ -95,6 +95,22 @@ class Links(object):
             """
             UPDATE links
             SET active = FALSE
+            WHERE id36 = %s
+            """, (id36,)
+        )
+        self.conn.commit()
+        cur.close()
+
+    @classmethod
+    def increment_clicks(self, id36):
+        """
+        Increments the clicks column of :id36:
+        """
+        cur = self.cursor()
+        cur.execute(
+            """
+            UPDATE links SET
+            clicks = clicks + 1
             WHERE id36 = %s
             """, (id36,)
         )
