@@ -13,3 +13,10 @@ PG_PASS = 'hunter2'
 DEBUG = False
 SERVER_NAME = 'yl.io'
 DOMAIN_BLACKLIST = [SERVER_NAME]
+
+# ============================= #
+#            Stathat            #
+# ============================= #
+ENABLE_METRICS = False
+STATHAT_KEY = ''
+STATHAT_PREFIX = 'ylio.'
