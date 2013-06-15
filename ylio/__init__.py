@@ -3,6 +3,11 @@ from flask import Flask, current_app, g
 app = Flask(__name__, static_folder=None)
 app.config.from_pyfile('config.py')
 
+if app.config.get('SENTRY_DSN'):
+    from raven.contrib.flask import Sentry
+    sentry = Sentry(app)
+
+
 # Route static folder to /static in dev
 # and a subdomain in production
 app.static_folder = 'static'

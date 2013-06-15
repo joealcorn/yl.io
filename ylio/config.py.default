@@ -13,6 +13,7 @@ PG_PASS = 'hunter2'
 DEBUG = False
 SERVER_NAME = 'yl.io'
 DOMAIN_BLACKLIST = [SERVER_NAME]
+SENTRY_DSN = None
 
 # ============================= #
 #            Stathat            #
