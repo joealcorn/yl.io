@@ -87,6 +87,9 @@ def canonical_url(url):
         url = url[4:]
     if url.endswith('/'):
         url = url[:-1]
+    if url.endswith('.'):
+        url = url[:-1]
+
     url = url.split('/', 1)[0]
     return url
 
